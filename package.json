@@ -1,7 +1,7 @@
 {
   "name": "borderless-camera",
   "description": "a simple camera app without window borders, useful for the screencast recording",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "MIT",
   "author": {
     "name": "Luigi Maselli",
@@ -11,6 +11,7 @@
   "private": true,
   "main": "src/index.js",
   "scripts": {
+    "make-pkgs":"node_modules/.bin/build --linux AppImage",
     "pack": "build --dir",
     "dist": "build",
     "start": "electron ."
