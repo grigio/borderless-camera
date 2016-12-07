@@ -11,18 +11,26 @@
   "private": true,
   "main": "src/index.js",
   "scripts": {
-    "clean": "rimraf dist",
-    "start": "electron .",
-    "exe32": "electron-packager . borderless-camera --platform linux --arch ia32 --out dist/ --ignore \"(dist|node_modules/electron.*)\"",
-    "exe64": "./node_modules/.bin/electron-packager . borderless-camera --platform linux --arch x64 --out dist/ --ignore \"(dist|node_modules/electron.*)\"",
-    "deb32": "electron-installer-debian --src dist/borderless-camera-linux-ia32/ --arch i386 --config config.json",
-    "deb64": "electron-installer-debian --src dist/borderless-camera-linux-x64/ --arch amd64 --config config.json",
-    "build": "npm run clean && npm run exe32 && npm run deb32 && npm run exe64 && npm run deb64"
+    "pack": "build --dir",
+    "dist": "build",
+    "start": "electron ."
   },
   "devDependencies": {
-    "electron-installer-debian": "*",
-    "electron-packager": "*",
-    "electron-prebuilt": "*",
-    "rimraf": "*"
+    "electron-builder": "^10.6.0"
+  },
+  "build": {
+    "appId": "org.grigio.borderless-camera",
+    "linux": {
+      "arch": [
+        "x64"
+      ],
+      "target": [
+        "deb",
+        "AppImage"
+      ]
+    },
+    "mac": {
+      "category": "public.app-category.developer-tools"
+    }
   }
 }
