@@ -97,18 +97,23 @@
     <video videoCanvas id="video" width="100%" height="100%" autoplay></video>
 
     <script>
-        var video = document.getElementById('video');
         var ipc = require('electron').ipcRenderer;
         const {shell} = require('electron')
+        var video = document.querySelector('[videoCanvas]');
 
-        // Get access to the camera!
-        if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-            // Not adding `{ audio: true }` since we only want video now
-            navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
-                video.src = window.URL.createObjectURL(stream);
+
+        // Prefer camera resolution nearest to 1280x720.
+        navigator.mediaDevices.getUserMedia({ 
+            audio: false, 
+            video: { width: 1280, height: 720 
+        } })
+        .then(function(mediaStream) {
+            video.srcObject = mediaStream;
+            video.onloadedmetadata = function(e) {
                 video.play();
-            });
-        }
+            };
+        })
+        .catch(function(err) { console.log(err.name + ": " + err.message); }); // always check for errors at the end.
 
         k=document.querySelector('[overlayPanel]')
 

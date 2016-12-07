@@ -41,7 +41,7 @@ function createWindow () {
   win = new BrowserWindow({
     width: 800,
     height: 600,
-    transparent: true,
+    transparent: false,
     // titleBarStyle: 'hidden-inset',
     frame: false,
     // toolbar: false,
