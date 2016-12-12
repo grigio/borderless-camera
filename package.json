@@ -1,7 +1,7 @@
 {
   "name": "borderless-camera",
   "description": "a simple camera app without window borders, useful for the screencast recording",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "license": "MIT",
   "author": {
     "name": "Luigi Maselli",
