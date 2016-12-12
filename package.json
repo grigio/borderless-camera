@@ -11,7 +11,7 @@
   "private": true,
   "main": "src/index.js",
   "scripts": {
-    "make-pkgs":"node_modules/.bin/build --linux AppImage",
+    "make-pkgs": "node_modules/.bin/build --linux AppImage",
     "pack": "build --dir",
     "dist": "build",
     "start": "electron ."
