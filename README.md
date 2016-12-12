@@ -30,5 +30,12 @@ Put the `borderless-camera-xxx.AppImage` executable in a persistent path (e.g ~/
 npm install
 npm start
 ```
+### Bitcoin donations
+
+Buy me a coffee if you want..
+
+`12eknq1JnYqd68UUaZBmC7J5ujSqXipN2y`
+
+![qr](https://cloud.githubusercontent.com/assets/8074/21113080/7cfb74ee-c0a8-11e6-8f96-03b49ef42dd3.jpg)
 
 (c) Luigi Maselli (https://corso-javascript.it, https://grigio.org)
