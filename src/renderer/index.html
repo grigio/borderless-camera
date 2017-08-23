@@ -8,7 +8,7 @@
     <style>
         body {
             margin: 0;
-            overflow: hidden;
+            overflow: hidden;            
         }
         .spacerH {
             margin-left: 0.5vw;
@@ -59,15 +59,17 @@
         }
         #overlay-panel {
             z-index:10;
-            position: absolute;
+            position: absolute;  
+            left:50%;
+            margin-left:-25%;       
             /* width: 53%; */
             /* height: 7%; */
-            background: #5d5d5d;
+            background: #5d5d5d;            
             /* -webkit-app-region: drag; */
             opacity: 0.5;
             margin-top: 50vw;
             /* display: none; */
-            margin-left: 27%;
+            /*margin-left: 27%;*/
             border-radius: 1vw;
             display:block;
         }
@@ -116,7 +118,7 @@
             audio: false,
             video: { width: 1280, height: 720
         } })
-        .then(function(mediaStream) {
+        .then(function(mediaStream) {            
             video.srcObject = mediaStream;
             video.onloadedmetadata = function(e) {
                 video.play();
@@ -147,7 +149,7 @@
 
             // ignore the first 1000ms throttle
             if (currMs - enterMs > 1000) {
-                console.log(currMs , enterMs)
+                //console.log(currMs , enterMs)
                 enterMs = currMs
                 
                 clearTimeout(timeout);
@@ -180,23 +182,23 @@
             if (ev.key === 'a') {
                 ipc.send('invokeAction', 'toggleAlwaysOnTop');
             }
-            console.log(ev)
+            //console.log(ev)
         });
 
         document.querySelector('[mirrorBtn]').addEventListener("click", (ev) => {
             // ipc.send('invokeAction', 'appQuit');
             document.querySelector('video').classList.toggle('flipped')
-            console.log(ev)
+            //console.log(ev)
         })
 
         document.querySelector('[closeBtn]').addEventListener("click", (ev) => {
             ipc.send('invokeAction', 'appQuit');
-            console.log(ev)
+            //console.log(ev)
         })
 
         document.querySelector('[infoBtn]').addEventListener("click", (ev) => {
             shell.openExternal('https://grigio.org')
-            console.log(ev)
+            //console.log(ev)
         })
 
     </script>
