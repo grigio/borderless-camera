@@ -2,6 +2,7 @@
 const {app, BrowserWindow} = require('electron')
 const path = require('path')
 const url = require('url')
+const version = require('../../package.json').version
 
 var ipc = require('electron').ipcMain;
 
@@ -11,6 +12,10 @@ let win
 
 ipc.on('invokeAction', function(event, data){
     // var result = processData(data);
+    if (data === 'appVersion') {
+      event.returnValue = version
+    }
+
     if (data === 'appQuit') {
         app.quit()
     }
@@ -41,7 +46,7 @@ function createWindow () {
   win = new BrowserWindow({
     width: 480,
     height: 320,
-    transparent: false,
+    transparent: true,
     // titleBarStyle: 'hidden-inset',
     frame: false,
     // toolbar: false,

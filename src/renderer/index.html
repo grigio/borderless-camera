@@ -90,7 +90,7 @@
                     font-weight: bold;
                     font-size: 4vw;
                     float:left;">
-                Borderless Camera
+                Borderless Camera <span version></span>
             </div>
             <div mirrorBtn class="relButton spacerH">
                 M
@@ -111,7 +111,9 @@
         var ipc = require('electron').ipcRenderer;
         const {shell} = require('electron')
         var video = document.querySelector('[videoCanvas]');
+        const version = ipc.sendSync('invokeAction', 'appVersion')
 
+        document.querySelector('[version]').innerHTML = version
 
         // Prefer camera resolution nearest to 1280x720.
         navigator.mediaDevices.getUserMedia({
@@ -197,7 +199,7 @@
         })
 
         document.querySelector('[infoBtn]').addEventListener("click", (ev) => {
-            shell.openExternal('https://grigio.org')
+            shell.openExternal('https://github.com/grigio/borderless-camera')
             //console.log(ev)
         })
 
