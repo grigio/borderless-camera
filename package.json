@@ -17,14 +17,12 @@
     "start": "electron ."
   },
   "devDependencies": {
-    "electron-builder": "^10.7.0"
+    "electron": "^3.0.2",
+    "electron-builder": "^20.28.4"
   },
   "build": {
     "appId": "org.grigio.borderless-camera",
     "linux": {
-      "arch": [
-        "x64"
-      ],
       "target": [
         "deb",
         "AppImage"
