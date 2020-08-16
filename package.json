@@ -30,6 +30,10 @@
     },
     "mac": {
       "category": "public.app-category.developer-tools"
+    },
+    "win": {
+      "target": "portable",
+      "icon": "build/icon.icns"
     }
   }
 }
