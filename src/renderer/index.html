@@ -73,6 +73,62 @@
             border-radius: 1vw;
             display:block;
         }
+        /* Dropdown Button */
+        .dropbtn {
+            background-color: #3498DB;
+            color: white;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Dropdown button on hover & focus */
+        .dropbtn:hover, .dropbtn:focus {
+            background-color: #2980B9;
+        }
+
+        /* The container <div> - needed to position the dropdown content */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Dropdown Content (Hidden by Default) */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        /* Links inside the dropdown */
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        /* Change color of dropdown links on hover */
+        .dropdown-content a:hover {
+            background-color: #ddd
+        }
+
+        /* Let's center credits and buttons */
+        .credits{
+            margin: 0 auto;
+            width: 50vw;
+        }
+
+        .buttons{
+            margin: 0 auto;
+            width: 18vw;
+        }
+
+    /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
     </style>
   </head>
   <body>
@@ -82,26 +138,37 @@
 
     <div id="draggable"></div>
 
+    
+
     <div overlayWrapper id="overlayWrapper">
         <div overlayPanel id="overlay-panel">
-            <div class="spacerH"
-                style="color: white;
-                    font-family: sans-serif;
-                    font-weight: bold;
-                    font-size: 4vw;
-                    float:left;">
-                Borderless Camera <span version></span>
+            <div class="credits">
+                <div class="spacerH"
+                    style="color: white;
+                        font-family: sans-serif;
+                        font-weight: bold;
+                        font-size: 4vw;
+                        float:left;">
+                    Borderless Camera <span version></span>
+                </div>
+           </div> 
+            <div class="spacerH">
+                <form action="#">
+                    <select name="devices" id="devices" onchange="deviceSelected()">
+                    </select>
+              </form>
             </div>
-            <div mirrorBtn class="relButton spacerH">
-                M
+            <div class="buttons">
+                <div mirrorBtn class="relButton spacerH">
+                    M
+                </div>
+                <div infoBtn class="relButton spacerH">
+                    ℹ
+                </div>
+                <div closeBtn class="relButton spacerH">
+                    ⨯
+                </div>
             </div>
-            <div infoBtn class="relButton spacerH">
-                ℹ
-            </div>
-            <div closeBtn class="relButton spacerH">
-                ⨯
-            </div>
-
         </div>
     </div>
 
@@ -115,18 +182,25 @@
 
         document.querySelector('[version]').innerHTML = version
 
+        
         // Prefer camera resolution nearest to 1280x720.
-        navigator.mediaDevices.getUserMedia({
-            audio: false,
-            video: { width: 1280, height: 720
-        } })
-        .then(function(mediaStream) {            
-            video.srcObject = mediaStream;
-            video.onloadedmetadata = function(e) {
-                video.play();
-            };
-        })
-        .catch(function(err) { console.log(err.name + ": " + err.message); }); // always check for errors at the end.
+        navigator.mediaDevices.enumerateDevices()
+            .then(function (devices) {
+                devices.forEach(function (device) {
+                    //console.log(device.kind + ": " + device.label +" id = " + device.deviceId);
+                    if (device.kind == 'videoinput') {
+                        var devices = document.getElementById("devices");
+                        var option = new Option(device.label, device.deviceId);
+                        //console.log(option.value);
+                        devices.appendChild(option);                                            
+                    }
+                });
+            }).then(function () {
+                showVideo();
+            })
+            .catch(function (err) {
+                    console.log(err.name + ": " + err.message);
+        });
 
         // content panel m x
         overlayPanelEl = document.querySelector('[overlayPanel]')
@@ -143,6 +217,29 @@
         function hidePanel() {
             overlayPanelEl.style.opacity = 0.0
             activeMode = false
+        }
+
+        function deviceSelected(){
+            var select = document.getElementById('devices');
+            var value = select.options[select.selectedIndex].value;
+            //console.log(select.options[select.selectedIndex]);
+            showVideo(value);
+        }
+
+        function showVideo(deviceId){
+            var videoDetails = (deviceId) ?  { deviceId: { exact: deviceId } } : { width: 1280, height: 720 };
+                navigator.mediaDevices.getUserMedia({
+                        audio: false,
+                        video: videoDetails
+                    })
+                        .then(function (mediaStream) {
+                            video.srcObject = mediaStream;
+                            video.onloadedmetadata = function (e) {
+                                video.play();
+                            };
+                        })
+                        .catch(function (err) { console.log(err.name + ": " + err.message); }); // always check for errors at the end.
+       
         }
 
         document.addEventListener("mousemove", (ev) => {
